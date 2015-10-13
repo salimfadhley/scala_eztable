@@ -1,4 +1,4 @@
 # scala_eztable
 Immutable tables in Scala
 
-here's some text
+[![Build Status](https://travis-ci.org/salimfadhley/scala_eztable.svg)](https://travis-ci.org/salimfadhley/scala_eztable)
