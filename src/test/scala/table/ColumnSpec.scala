@@ -52,4 +52,16 @@ class ColumnSpec extends FlatSpec with Matchers {
     c.length should be
   }
 
+  it should "be able to provide a text description of the column" in {
+    val intCol = new Column[Int]("A").extend(List())
+    intCol.description should be("A (int)")
+  }
+
+  it should "descriptions should contain the name and type of a column" in {
+    val intCol = new Column[String]("Zyz").extend(List())
+    intCol.description should be("Zyz (String)")
+  }
+
+
+
 }
