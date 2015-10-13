@@ -48,4 +48,42 @@ class TableSpec extends FlatSpec with Matchers {
     result should be(expected)
   }
 
+  it should "have a length and a width" in {
+    val T = new Table()
+    T.length should be(0)
+    T.width should be(0)
+  }
+
+  it should "have a length and a width that changes when items are added" in {
+    val intCol = new Column[Int]("A").extend(List(3, 3, 9, 8, 2))
+    val T = new Table(List(intCol, intCol, intCol))
+
+    T.length should be(intCol.length)
+    T.width should be(3)
+  }
+
+  it can "be accessed as an iterator" in {
+    val intCol = new Column[Int]("A").extend(List(3, 4, 9, 8, 2))
+    val T = new Table(List(intCol, intCol, intCol))
+    val Ti: Iterator[List[_]] = T.iterator
+    Ti.next() should be(List(3, 3, 3))
+    Ti.next() should be(List(4, 4, 4))
+    Ti.next() should be(List(9, 9, 9))
+    Ti.next() should be(List(8, 8, 8))
+    Ti.next() should be(List(2, 2, 2))
+  }
+
+  it should "throw an exception if we iterate out of bounds" in {
+    val intCol = new Column[Int]("A").extend(List())
+    val T = new Table(List(intCol, intCol, intCol))
+
+    try {
+      T.iterator.next()
+      throw new RuntimeException("Failed to raise appropriate error")
+    } catch {
+      case _: java.util.NoSuchElementException =>
+    }
+
+  }
+
 }

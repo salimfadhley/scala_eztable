@@ -2,6 +2,7 @@ package table
 import scala.reflect.ClassTag
 
 class Column[T:ClassTag](columnName:String, values:List[_<:T]=Nil){
+
   val _values:List[T] = values
   val _columnName:String = columnName
 
@@ -24,8 +25,12 @@ class Column[T:ClassTag](columnName:String, values:List[_<:T]=Nil){
 
   }
 
-  def getTypeName():String = {
+  def getTypeName: String = {
     implicitly[ClassTag[T]].runtimeClass.getSimpleName
+  }
+
+  def length: Int = {
+    _values.length
   }
 
 
