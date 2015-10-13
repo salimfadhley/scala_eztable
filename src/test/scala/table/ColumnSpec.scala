@@ -37,7 +37,7 @@ class ColumnSpec extends FlatSpec with Matchers {
 
   it should "be able to get the colum's type as a string" in {
     val c = new Column[Float]("X").extend(List(1.1f, 2.2f, 3.3f))
-    c.getTypeName() should be("Float")
+    c.getTypeName() should be("float")
   }
 
   it should "be able to get the colum's type as a string for String Columns" in {
