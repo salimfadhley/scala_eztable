@@ -86,5 +86,18 @@ class TableSpec extends FlatSpec with Matchers {
 
   }
 
+  it should "provide a column descripton" in {
+    val intCol = new Column[Int]("A").extend(List(3, 4, 9, 8, 2))
+    val T = new Table(List(intCol))
+    T.desription should be(List("A (int)"))
+  }
+
+  it should "the description should include all types" in {
+    val intCol = new Column[Int]("A").extend(List(3, 4, 9))
+    val strCol = new Column[String]("B").extend(List("A", "B", "C"))
+    val T = new Table(List(intCol, strCol))
+    T.desription should be(List("A (int)", "B (String)"))
+  }
+
 
 }

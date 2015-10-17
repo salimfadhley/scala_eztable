@@ -1,7 +1,7 @@
 package table
 
 
-class Table(columns: List[Column[_ <: Any]] = Nil) extends Iterable[List[_]] {
+class Table(columns: List[Column[_ <: Any]] = Nil) extends Tabular {
   val _columns = columns
 
   class TableIterator extends Iterator[List[_]] {
@@ -17,8 +17,6 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends Iterable[List[_]] {
       ri.hasNext
     }
   }
-
-
 
 
   def +=(row: List[_ <: Any]): Table = {
@@ -57,6 +55,10 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends Iterable[List[_]] {
 
   def iterator: Iterator[List[_]] = {
     new TableIterator()
+  }
+
+  def desription: List[String] = {
+    _columns.map(c => c.description)
   }
 
 
