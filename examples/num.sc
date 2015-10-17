@@ -10,4 +10,4 @@ foo.foreach(_ match {
   case _ => println("Unknown")
 })
 
-
+Float

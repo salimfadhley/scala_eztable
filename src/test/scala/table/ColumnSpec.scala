@@ -93,6 +93,35 @@ class ColumnSpec extends FlatSpec with Matchers {
     c0._values should be(List(true, false))
   }
 
+  it should "know that columns with the same name, type" in {
+    val c0 = new Column[Boolean]("abc")
+    val c1 = new Column[Boolean]("abc")
+    assert(c0.equals(c1))
+  }
+
+  it should "know that columns with the same name, type and values are equal" in {
+    val c0 = new Column[String]("abc").extend(List("Foo", "Bar", "Baz"))
+    val c1 = new Column[String]("abc").extend(List("Foo", "Bar", "Baz"))
+    assert(c0.equals(c1))
+  }
+
+  it should "know that columns different names are never equal" in {
+    val c0 = new Column[Boolean]("def")
+    val c1 = new Column[Boolean]("abc")
+    assert(!c0.equals(c1))
+  }
+
+  it should "know that columns different values are never equal" in {
+    val c0 = new Column[Boolean]("def").extend(List(true, true, false))
+    val c1 = new Column[Boolean]("def").extend(List(true, true, true))
+    assert(!c0.equals(c1))
+  }
+
+  it should "know that columns different types are never equal" in {
+    val c0 = new Column[Int]("def").extend(List(1, 2, 3))
+    val c1 = new Column[Integer]("def").extend(List(1, 2, 3))
+    assert(!c0.equals(c1))
+  }
 
 
 }

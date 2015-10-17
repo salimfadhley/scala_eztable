@@ -54,5 +54,12 @@ class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extend
     _values.length
   }
 
+  def equals(o: Column[T]): Boolean = {
+    o match {
+      case o: Column[T] => (o.name eq this.name) && (o._values == this.values)
+      case _ => false
+    }
+  }
+
 
 }
