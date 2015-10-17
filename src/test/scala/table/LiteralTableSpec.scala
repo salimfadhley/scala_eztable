@@ -29,7 +29,18 @@ class LiteralTableSpec extends FlatSpec with Matchers {
     val result = pokedex.toLiteral
 
     result should be(expected)
+  }
 
+  it should "be possible to make a table from a literal" in {
+
+    val tl =
+      """|| Name (String) | Level (Integer) |
+        || Squirtle      | 1               |
+        || Bulbasaur     | 1               |
+        || Charmander    | 2               |""".stripMargin
+
+
+    val t0 = new Table(tl)
   }
 
 }

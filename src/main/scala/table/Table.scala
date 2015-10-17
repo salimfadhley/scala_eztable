@@ -5,19 +5,17 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable {
   val _columns = columns
 
   class TableIterator extends Iterator[List[_]] {
-
     val ri: Iterator[Int] = rowIndexIterator
-
     def next() = {
       val index: Int = ri.next()
       _columns.map((c: Column[_]) => c(index))
     }
-
     def hasNext = {
       ri.hasNext
     }
   }
 
+  def this(tableLiteral: String) = this()
 
   def +=(row: List[_ <: Any]): Table = {
     val rowAndColumns: List[(Any, Column[_])] = row.zip(_columns)

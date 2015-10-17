@@ -2,10 +2,9 @@ package table
 import scala.reflect.ClassTag
 
 class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extends DescribableColumn {
-
-
   val _values:List[T] = values
   val _columnName:String = columnName
+
 
   def name: String = _columnName
 
@@ -29,7 +28,26 @@ class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extend
   }
 
   def getTypeName: String = {
-    implicitly[ClassTag[T]].runtimeClass.getSimpleName
+    getRuntimeClass.getSimpleName
+  }
+
+  def appendString(v: String): Column[T] = {
+    val converted: Any = getTypeName.toLowerCase match {
+      case "string" => v.toString
+      case "integer" => v.toInt
+      case "int" => v.toInt
+      case "float" => v.toFloat
+      case "double" => v.toDouble
+      case "boolean" => v.toBoolean
+      case t: String => throw new RuntimeException(s"Cannot convert from type $t")
+    }
+
+    appendAny(converted)
+  }
+
+
+  def getRuntimeClass: Class[_] = {
+    implicitly[ClassTag[T]].runtimeClass
   }
 
   def length: Int = {

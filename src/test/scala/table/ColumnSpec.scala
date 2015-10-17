@@ -68,6 +68,31 @@ class ColumnSpec extends FlatSpec with Matchers {
     emptyCol.columnCharWidth should be(0)
   }
 
+  it should "allow strings to be added as strings" in {
+    val c0 = new Column[String]("Zyz").appendString("a").appendString("b")
+    c0._values should be(List("a", "b"))
+  }
+
+  it should "allow Integers to be added as strings" in {
+    val c0 = new Column[Integer]("abc").appendString("1").appendString("2")
+    c0._values should be(List(1, 2))
+  }
+
+  it should "allow Ints to be added as strings" in {
+    val c0 = new Column[Int]("abc").appendString("2").appendString("3")
+    c0._values should be(List(2, 3))
+  }
+
+  it should "allow Floats to be added as strings" in {
+    val c0 = new Column[Float]("abc").appendString("1.23").appendString("2.34")
+    c0._values should be(List(1.23f, 2.34f))
+  }
+
+  it should "allow booleans to be added as strings" in {
+    val c0 = new Column[Boolean]("abc").appendString("true").appendString("false")
+    c0._values should be(List(true, false))
+  }
+
 
 
 }
