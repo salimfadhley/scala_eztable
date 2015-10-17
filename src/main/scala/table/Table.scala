@@ -1,7 +1,7 @@
 package table
 
 
-class Table(columns: List[Column[_ <: Any]] = Nil) extends Tabular {
+class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable {
   val _columns = columns
 
   class TableIterator extends Iterator[List[_]] {
