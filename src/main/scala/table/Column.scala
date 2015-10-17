@@ -2,6 +2,8 @@ package table
 import scala.reflect.ClassTag
 
 class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extends DescribableColumn {
+
+
   val _values:List[T] = values
   val _columnName:String = columnName
 

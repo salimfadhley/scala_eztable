@@ -1,8 +1,5 @@
 package table
 
-/**
- * Created by sal on 17/10/15.
- */
 trait Tabular extends Iterable[List[_]] {
 
   val _columns:List[Column[_]]
@@ -12,8 +9,7 @@ trait Tabular extends Iterable[List[_]] {
   }
 
   def columnCharWidths: List[Int] = {
-    description.map(d=>d.length)
+    _columns.map(c => c.charWidth)
   }
-
 
 }

@@ -62,6 +62,12 @@ class ColumnSpec extends FlatSpec with Matchers {
     intCol.description should be("Zyz (String)")
   }
 
+  it should "know the width of the widest column" in {
+    val emptyCol = new Column[String]("Zyz").extend(List())
+
+    emptyCol.columnCharWidth should be(0)
+  }
+
 
 
 }

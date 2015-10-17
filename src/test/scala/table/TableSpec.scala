@@ -107,5 +107,13 @@ class TableSpec extends FlatSpec with Matchers {
     result should be(List(7, 10))
   }
 
+  it should "should give the maximum of description or max column width" in {
+    val strCol0 = new Column[String]("Overly Long Column Name").extend(List("A", "B"))
+    val strCol1 = new Column[String]("x").extend(List("Hyperbole antagonism", "Crummulet Foxglobe Indignity"))
+    val T = new Table(List(strCol0, strCol1))
+    val result: List[Int] = T.columnCharWidths
+    result should be(List(32, 28))
+  }
+
 
 }
