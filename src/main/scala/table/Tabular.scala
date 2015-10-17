@@ -5,6 +5,15 @@ package table
  */
 trait Tabular extends Iterable[List[_]] {
 
-  def desription: List[String]
+  val _columns:List[Column[_]]
+
+  def description: List[String] = {
+    _columns.map(c => c.description)
+  }
+
+  def columnCharWidths: List[Int] = {
+    description.map(d=>d.length)
+  }
+
 
 }

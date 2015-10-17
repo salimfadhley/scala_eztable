@@ -57,9 +57,6 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends Tabular {
     new TableIterator()
   }
 
-  def desription: List[String] = {
-    _columns.map(c => c.description)
-  }
 
 
 }
