@@ -119,8 +119,33 @@ class ColumnSpec extends FlatSpec with Matchers {
 
   it should "know that columns different types are never equal" in {
     val c0 = new Column[Int]("def").extend(List(1, 2, 3))
-    val c1 = new Column[Integer]("def").extend(List(1, 2, 3))
+    val c1 = new Column[String]("def").extend(List("a", "b", "c"))
     assert(!c0.equals(c1))
+  }
+
+  it should "be able to parse a description" in {
+    Column.parseDescription("XYZ (Int)") should equal(("XYZ", "Int"))
+  }
+
+  it should "reject invalid descriptions" in {
+
+    intercept[RuntimeException] {
+      Column.parseDescription("(Int)")
+      }
+  }
+
+  it should "be able to initialize a column from a string description" in {
+    val result: Column[String] = Column.fromDescription("ABC (String)").asInstanceOf[Column[String]]
+    assert(result.name === "ABC")
+    assert(result._values === List[String]())
+    assert(result.getTypeName === "String")
+  }
+
+  it should "be able to initialize a column from complex string descriptions" in {
+    val result: Column[Int] = Column.fromDescription("My House (Int)").asInstanceOf[Column[Int]]
+    assert(result.name === "My House")
+    assert(result._values === List[Int]())
+    assert(result.getTypeName === "int")
   }
 
 

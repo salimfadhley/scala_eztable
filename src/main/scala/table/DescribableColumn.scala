@@ -21,4 +21,10 @@ trait DescribableColumn {
     math.max(columnCharWidth, description.length)
   }
 
+  override def toString = {
+    val vvs: String = _values.mkString(", ")
+
+    s"""<${description}, [${vvs}]>"""
+  }
+
 }
