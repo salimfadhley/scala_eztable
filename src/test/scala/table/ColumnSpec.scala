@@ -148,5 +148,10 @@ class ColumnSpec extends FlatSpec with Matchers {
     assert(result.getTypeName === "int")
   }
 
+  it should "be able to regenerate the original description back from the column" in {
+    val result: Column[_] = Column.fromDescription("ABC (String)")
+    assert(result.description === "ABC (String)")
+  }
+
 
 }

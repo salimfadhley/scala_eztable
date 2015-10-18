@@ -73,6 +73,7 @@ object Column {
     typeName.toLowerCase match {
       case "string" => new Column[String](columnName)
       case "integer" => new Column[Integer](columnName)
+      case "int" => new Column[Int](columnName)
       case x: String => throw new RuntimeException(s"Cannot build column type $x from string")
     }
   }
