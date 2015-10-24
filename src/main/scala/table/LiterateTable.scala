@@ -1,6 +1,6 @@
 package table
 
-trait LiterateTable extends Iterable[List[_]] {
+trait LiterateTable extends Iterable[Map[String, Any]] {
 
   val _columns:List[Column[_]]
 
@@ -23,12 +23,21 @@ trait LiterateTable extends Iterable[List[_]] {
   def toLiteral: String = {
     val widths = columnCharWidths
     val headerLine: String = makeLiteralLine(widths, description)
+    val columnNames: List[String] = _columns.map(c => c.name)
 
-    val otherLines: List[String] = this.iterator.map((value: List[_]) => {
-      makeLiteralLine(widths, value.map(v => v.toString))
-    }).toList
 
-    (headerLine :: otherLines).mkString("\n")
+
+    val otherLines: Iterator[String] = this.iterator.map {
+      case rowMap: Map[String, Any] => {
+        val rowStrings: List[String] = columnNames.map {
+          case x: String => rowMap.getOrElse(x, "").toString
+        }
+        makeLiteralLine(widths, rowStrings)
+      }
+
+    }
+
+    (headerLine :: otherLines.toList).mkString("\n")
 
   }
 

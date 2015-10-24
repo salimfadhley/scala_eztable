@@ -10,7 +10,7 @@ case class MuTable(table: Table = new Table()) {
     new Table(columns)
   )
 
-  def iterator: Iterator[List[_]] = _table.iterator
+  def iterator: Iterator[Map[String, Any]] = _table.iterator
 
   def addColumn(column: Column[_]): MuTable = {
     _table = _table.addColumn(column)

@@ -63,14 +63,16 @@ class TableSpec extends FlatSpec with Matchers {
   }
 
   it can "be accessed as an iterator" in {
-    val intCol = new Column[Int]("A").extend(List(3, 4, 9, 8, 2))
-    val T = new Table(List(intCol, intCol, intCol))
-    val Ti: Iterator[List[_]] = T.iterator
-    Ti.next() should be(List(3, 3, 3))
-    Ti.next() should be(List(4, 4, 4))
-    Ti.next() should be(List(9, 9, 9))
-    Ti.next() should be(List(8, 8, 8))
-    Ti.next() should be(List(2, 2, 2))
+    val intCol0 = new Column[Int]("A").extend(List(3, 4, 9, 8, 2))
+    val intCol1 = new Column[Int]("B").extend(List(3, 4, 9, 8, 2))
+    val intCol2 = new Column[Int]("C").extend(List(3, 4, 9, 8, 2))
+    val T = new Table(List(intCol0, intCol1, intCol2))
+    val Ti: Iterator[Map[String, Any]] = T.iterator
+    Ti.next() should be(Map("A" -> 3, "B" -> 3, "C" -> 3))
+    //    Ti.next() should be(List(4, 4, 4))
+    //    Ti.next() should be(List(9, 9, 9))
+    //    Ti.next() should be(List(8, 8, 8))
+    //    Ti.next() should be(List(2, 2, 2))
   }
 
   it should "throw an exception if we iterate out of bounds" in {

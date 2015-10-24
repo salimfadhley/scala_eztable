@@ -1,6 +1,6 @@
 lazy val root = (project in file(".")).
   settings(
-    name := "eztable",
+    name := "scala_eztable",
     version := "1.0",
     scalaVersion := "2.11.7"
   )

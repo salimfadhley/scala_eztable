@@ -1,14 +1,16 @@
 package table
 
 
-class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable {
+class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable with IndexableTable {
+  
+
   val _columns = columns
 
-  class TableIterator extends Iterator[List[_]] {
+  class TableIterator extends Iterator[Map[String, Any]] {
     val ri: Iterator[Int] = rowIndexIterator
     def next() = {
       val index: Int = ri.next()
-      _columns.map((c: Column[_]) => c(index))
+      _columns.map((c: Column[_]) => (c.name, c(index))).toMap[String, Any]
     }
     def hasNext = {
       ri.hasNext
@@ -51,8 +53,12 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable {
 
   def width: Int = _columns.length
 
-  def iterator: Iterator[List[_]] = {
+  def iterator: Iterator[Map[String, Any]] = {
     new TableIterator()
+  }
+
+  def getIndex[T](colNames: List[String]): TableIndex[T] = {
+    new TableIndex[T](table = this, columnNames = colNames)
   }
 
 
