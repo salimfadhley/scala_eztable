@@ -17,8 +17,6 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable with In
     }
   }
 
-  def this(tableLiteral: String) = this()
-
   def +=(row: List[_ <: Any]): Table = {
     val rowAndColumns: List[(Any, Column[_])] = row.zip(_columns)
     val newColumns: List[Column[_ <: Any]] = rowAndColumns.map((rc: (Any, Column[_])) => rc._2.appendAny(rc._1))
@@ -64,3 +62,39 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable with In
 
 
 }
+
+object Table {
+
+  def splitSingleRow(row: String) = {
+    row.stripPrefix("|").stripSuffix("|").split('|').map(s => s.trim).toList
+  }
+
+  def makeColumnsFromHeader(headerRow: String): List[Column[_]] = {
+    val descriptions = splitSingleRow(headerRow)
+    descriptions.map(d => Column.fromDescription(d))
+  }
+
+  def tableLiteralToColumns(tableLiteral: String): List[Column[_]] = {
+    val rows = tableLiteral.split("\n")
+    val dataRows = rows.tail
+    val columns = makeColumnsFromHeader(rows.head)
+
+    val data: List[List[String]] = dataRows.toList.map((r) => {
+      splitSingleRow(r)
+    }).transpose
+
+
+
+    columns.zip(data).map((cd: (Column[_], List[String])) => {
+      val column = cd._1
+      val elements = cd._2
+      column.extendStrings(elements)
+    })
+  }
+
+  def fromLiteral(literal: String): Table = {
+    new Table(tableLiteralToColumns(literal))
+
+  }
+}
+

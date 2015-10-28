@@ -152,5 +152,17 @@ class ColumnSpec extends FlatSpec with Matchers {
     assert(result.description === "ABC (String)")
   }
 
+  it should "be able to add multiple strings to int columns" in {
+    val intCol0: Column[Int] = new Column("xxx")
+    val intCol1 = intCol0.extendStrings(List("1", "2", "5"))
+    assert(intCol1._values === List(1, 2, 5))
+  }
+
+  it should "be able to add multiple strings to double columns" in {
+    val intCol0: Column[Double] = new Column("xxx")
+    val intCol1 = intCol0.extendStrings(List("1.1", "2.2", "5.5"))
+    assert(intCol1._values === List(1.1d, 2.2d, 5.5d))
+  }
+
 
 }

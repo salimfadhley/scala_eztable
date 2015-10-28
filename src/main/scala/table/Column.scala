@@ -3,6 +3,8 @@ package table
 import scala.reflect.ClassTag
 
 class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extends DescribableColumn {
+
+
   val _values: List[T] = values
   val _columnName: String = columnName
 
@@ -46,6 +48,16 @@ class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extend
     appendAny(converted)
   }
 
+  def extendStrings(elements: List[String]): Column[T] = {
+    elements match {
+      case e if e.isEmpty => this
+      case e => {
+        val newCol = this.appendString(elements.head)
+        newCol.extendStrings(elements.tail)
+      }
+    }
+  }
+
 
   def getRuntimeClass: Class[_] = {
     implicitly[ClassTag[T]].runtimeClass
@@ -82,7 +94,8 @@ object Column {
     val matchDescription = """([\w\s]+)\s+\((\w+)\)""".r
     description match {
       case matchDescription(n, t) => (n, t)
-      case x => throw new RuntimeException(s"Cannot Parse: $x")
+      case x if x.length == 0 => throw new RuntimeException(s"Empty description is not valid.")
+      case x => throw new RuntimeException(s"Cannot Parse: '$x'")
     }
   }
 

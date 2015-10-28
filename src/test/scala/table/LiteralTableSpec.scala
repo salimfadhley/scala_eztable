@@ -2,7 +2,7 @@ package table
 
 import org.scalatest._
 
-class LiteralTableSpec extends FlatSpec with Matchers {
+class LiteralTableSpec extends FlatSpec with Matchers with Suite {
 
   "LiteralTable" should "have a method which produces a string representation" in {
     val intCol = new Column[Int]("A").extend(List(3))
@@ -32,7 +32,6 @@ class LiteralTableSpec extends FlatSpec with Matchers {
   }
 
   it should "be possible to make a table from a literal" in {
-
     val tl =
       """|| Name (String) | Level (Integer) |
         || Squirtle      | 1               |
@@ -40,7 +39,8 @@ class LiteralTableSpec extends FlatSpec with Matchers {
         || Charmander    | 2               |""".stripMargin
 
 
-    val t0 = new Table(tl)
+    val t0 = Table.fromLiteral(tl)
+    assert(t0(0) === List("Squirtle", 1))
   }
 
 }

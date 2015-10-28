@@ -117,5 +117,7 @@ class TableSpec extends FlatSpec with Matchers {
     result should be(List(32, 28))
   }
 
+  //TODO: Check out of bounds on a table
+
 
 }
