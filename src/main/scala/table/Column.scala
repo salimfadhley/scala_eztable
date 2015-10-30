@@ -37,6 +37,7 @@ class Column[T: ClassTag](columnName: String, values: List[_ <: T] = Nil) extend
   def appendString(v: String): Column[T] = {
     val converted: Any = getTypeName.toLowerCase match {
       case "string" => v.toString
+      case "str" => v.toString
       case "integer" => v.toInt
       case "int" => v.toInt
       case "float" => v.toFloat
@@ -84,6 +85,7 @@ object Column {
 
     typeName.toLowerCase match {
       case "string" => new Column[String](columnName)
+      case "str" => new Column[String](columnName)
       case "integer" => new Column[Integer](columnName)
       case "int" => new Column[Int](columnName)
       case x: String => throw new RuntimeException(s"Cannot build column type $x from string")

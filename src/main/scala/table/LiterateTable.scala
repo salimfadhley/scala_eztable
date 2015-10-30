@@ -1,15 +1,16 @@
 package table
 
+
 trait LiterateTable extends Iterable[Map[String, Any]] {
 
-  val _columns:List[Column[_]]
+  def getColumns: List[Column[_]]
 
   def description: List[String] = {
-    _columns.map(c => c.description)
+    getColumns.map(c => c.description)
   }
 
   def columnCharWidths: List[Int] = {
-    _columns.map(c => c.charWidth)
+    getColumns.map(c => c.charWidth)
   }
 
   private def makeLiteralLine(widths: List[Int], text: List[String]): String = {
@@ -23,7 +24,7 @@ trait LiterateTable extends Iterable[Map[String, Any]] {
   def toLiteral: String = {
     val widths = columnCharWidths
     val headerLine: String = makeLiteralLine(widths, description)
-    val columnNames: List[String] = _columns.map(c => c.name)
+    val columnNames: List[String] = getColumns.map(c => c.name)
 
 
 

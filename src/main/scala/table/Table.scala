@@ -1,10 +1,12 @@
 package table
 
 
-class Table(columns: List[Column[_ <: Any]] = Nil) extends LiterateTable with IndexableTable {
+class Table(columns: List[Column[_ <: Any]] = Nil) extends Tabular {
   
 
   val _columns = columns
+
+  def getColumns = columns
 
   class TableIterator extends Iterator[Map[String, Any]] {
     val ri: Iterator[Int] = rowIndexIterator
