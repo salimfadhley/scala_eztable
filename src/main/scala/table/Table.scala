@@ -8,6 +8,7 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends Tabular {
 
   def getColumns = columns
 
+
   class TableIterator extends Iterator[Map[String, Any]] {
     val ri: Iterator[Int] = rowIndexIterator
     def next() = {
@@ -60,8 +61,6 @@ class Table(columns: List[Column[_ <: Any]] = Nil) extends Tabular {
   def getIndex[T](colNames: List[String]): TableIndex[T] = {
     new TableIndex[T](table = this, columnNames = colNames)
   }
-
-
 
 }
 

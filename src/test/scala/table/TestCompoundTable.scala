@@ -58,4 +58,37 @@ class TestCompoundTable extends FunSuite with Matchers {
     assert(result === expected)
   }
 
+  test("The width of a combitable is the same as the width of it's parts") {
+
+    val t0 = Table.fromLiteral(
+      """|| A (str) | B (int) |
+        || Hello   | 92      |""".stripMargin)
+
+    val t1 = Table.fromLiteral(
+      """|| A (str) | B (int) |
+        || Goodbye  | 29      |""".stripMargin)
+
+    val ct0 = new CombiTable(t0, t1)
+
+    val result: Int = ct0.width
+    assert(result === 2)
+  }
+
+  test("It is possible to get any row of a combitable, just as we would get it from a regular table") {
+
+    val t0 = Table.fromLiteral(
+      """|| A (str) | B (int) |
+        || Hello   | 92      |""".stripMargin)
+
+    val t1 = Table.fromLiteral(
+      """|| A (str) | B (int) |
+        || Goodbye  | 29      |""".stripMargin)
+
+    val ct0 = new CombiTable(t0, t1)
+
+    val result0: List[Any] = ct0.apply(1)
+    assert(result0 === List("Goodbye", 29))
+  }
+
+
 }

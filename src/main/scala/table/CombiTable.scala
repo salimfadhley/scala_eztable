@@ -8,7 +8,17 @@ class CombiTable(tables: List[Table]) extends Tabular {
 
   def this(tables: Table*) = this(tables.toList)
 
-  override def apply(i: Int): List[Any] = ???
+  def getGetRowFromCombinationTable(_tables: List[Table], i: Int): List[Any] = {
+    if (i < _tables.head.length) {
+      _tables.head(i)
+    } else {
+      getGetRowFromCombinationTable(_tables.tail, i - tables.head.length)
+    }
+  }
+
+  override def apply(i: Int): List[Any] = {
+    getGetRowFromCombinationTable(_tables, i)
+  }
 
   override def length: Int = _tables.map {
     case (t: Table) => t.length
@@ -21,7 +31,10 @@ class CombiTable(tables: List[Table]) extends Tabular {
     iterators.reduce((a, b) => a ++ b)
   }
 
-  override def width: Int = ???
+  override def width: Int = {
+    _tables.head.width
+  }
 
   override def getColumns: List[Column[_]] = _tables.head.getColumns
+
 }
